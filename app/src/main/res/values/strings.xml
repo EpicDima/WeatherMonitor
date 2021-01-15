@@ -1,0 +1,63 @@
+<resources>
+    <string name="app_name">WeatherMonitor</string>
+
+    <string name="temperature">Temperature</string>
+    <string name="temperature_c">°C</string>
+    <string name="temperature_f">°F</string>
+    <string name="temperature_c_full">Centigrade - °C</string>
+    <string name="temperature_f_full">Fahrenheit - °F</string>
+
+    <string name="wind">Wind</string>
+    <string name="wind_kph">kph</string>
+    <string name="wind_mph">mph</string>
+    <string name="wind_kph_full">Kilometers per hour - kph</string>
+    <string name="wind_mph_full">Miles per hour - mph</string>
+
+    <string name="precip">Precipitation</string>
+    <string name="precip_mm">mm</string>
+    <string name="precip_in">in</string>
+    <string name="precip_mm_full">Millimeters - mm</string>
+    <string name="precip_in_full">Inches - in</string>
+
+    <string name="pressure">Pressure</string>
+    <string name="pressure_mm">mmHg</string>
+    <string name="pressure_in">inHg</string>
+    <string name="pressure_mm_full">Millimetre of mercury - mmHg</string>
+    <string name="pressure_in_full">Inch of mercury - inHg</string>
+
+    <string name="visibility">Visibility</string>
+    <string name="visibility_km">km</string>
+    <string name="visibility_mi">mi</string>
+    <string name="visibility_km_full">Kilometers - km</string>
+    <string name="visibility_mi_full">Miles - mi</string>
+
+    <string name="feels_like">Feels like %s</string>
+    <string name="cloud">Cloudiness</string>
+    <string name="wind_direction">Wind direction</string>
+    <string name="humidity">Humidity</string>
+    <string name="uv">UV</string>
+
+    <string name="hourly">Hourly forecast</string>
+    <string name="daily">Daily forecast</string>
+    <string name="details">Details</string>
+
+    <string name="forecast_icon_description">Weather icon</string>
+    <string name="units">Units of measurement</string>
+    <string name="update_every">Update every</string>
+
+    <string name="minutes_15">15 minutes</string>
+    <string name="minutes_30">30 minutes</string>
+    <string name="hour_1">1 hour</string>
+    <string name="hours_2">2 hours</string>
+    <string name="hours_4">4 hours</string>
+    <string name="hours_8">8 hours</string>
+    <string name="hours_12">12 hours</string>
+
+    <string name="locations">Locations</string>
+    <string name="settings">Settings</string>
+    <string name="add_location">Add location</string>
+    <string name="choose_location">Choose location</string>
+    <string name="enter_location">Enter location name (at least 3 characters)</string>
+    <string name="delete">Delete</string>
+    <string name="current_location">Current location</string>
+</resources>

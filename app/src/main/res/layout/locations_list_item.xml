@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="by.resliv.weathermonitor.model.Location" />
+
+        <import type="by.resliv.weathermonitor.model.CurrentForecast" />
+
+        <import type="by.resliv.weathermonitor.settings.MeasurementUnits" />
+
+        <import type="by.resliv.weathermonitor.settings.PreferencesKt" />
+
+        <variable
+            name="location"
+            type="Location" />
+
+        <variable
+            name="forecast"
+            type="CurrentForecast" />
+
+        <variable
+            name="units"
+            type="MeasurementUnits" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <ImageView
+            android:id="@+id/forecast_icon"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:contentDescription="@string/forecast_icon_description"
+            app:iconUrl="@{forecast.icon}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/location_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@{location.name}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toStartOf="@+id/delete"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/forecast_icon"
+            app:layout_constraintTop_toTopOf="@+id/forecast_icon"
+            tools:text="Gomel" />
+
+        <TextView
+            android:id="@+id/current_temperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:text="@{String.valueOf(units.temperatureUnit == PreferencesKt.TEMPERATURE_C ? forecast.tempC : forecast.tempF) + (units.temperatureUnit == PreferencesKt.TEMPERATURE_C ? @string/temperature_c : @string/temperature_f)}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/forecast_icon"
+            app:layout_constraintTop_toBottomOf="@id/location_name"
+            tools:text="-11 C" />
+
+        <TextView
+            android:id="@+id/forecast_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@{forecast.text}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/forecast_icon"
+            app:layout_constraintTop_toBottomOf="@+id/current_temperature"
+            tools:text="Moderate snow" />
+
+        <TextView
+            android:id="@+id/delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/delete"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/forecast_icon" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

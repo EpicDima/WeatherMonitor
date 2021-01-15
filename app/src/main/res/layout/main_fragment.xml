@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="androidx.lifecycle.LiveData" />
+
+        <import type="by.resliv.weathermonitor.model.Location" />
+
+        <import type="by.resliv.weathermonitor.model.CurrentForecast" />
+
+        <import type="by.resliv.weathermonitor.settings.MeasurementUnits" />
+
+        <import type="by.resliv.weathermonitor.settings.PreferencesKt" />
+
+        <variable
+            name="empty"
+            type="LiveData&lt;Boolean>" />
+
+        <variable
+            name="location"
+            type="LiveData&lt;Location>" />
+
+        <variable
+            name="forecast"
+            type="LiveData&lt;CurrentForecast>" />
+
+        <variable
+            name="units"
+            type="LiveData&lt;MeasurementUnits>" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{empty ? View.VISIBLE : View.GONE}">
+
+            <Button
+                android:id="@+id/choose_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/choose_location"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{empty ? View.GONE : View.VISIBLE}">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                android:scrollbars="none">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/main"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:id="@+id/location_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{location.name}"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                        android:textSize="26sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Gomel" />
+
+                    <ImageView
+                        android:id="@+id/forecast_icon"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginTop="24dp"
+                        android:contentDescription="@string/forecast_icon_description"
+                        app:iconUrl="@{forecast.icon}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/location_name" />
+
+                    <TextView
+                        android:id="@+id/current_temperature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:text='@{String.valueOf(units.temperatureUnit == PreferencesKt.TEMPERATURE_C ? forecast.tempC : forecast.tempF) + (units.temperatureUnit == PreferencesKt.TEMPERATURE_C ? @string/temperature_c : @string/temperature_f)}'
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textSize="34sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/forecast_icon"
+                        tools:text="-11 C" />
+
+                    <TextView
+                        android:id="@+id/current_feelslike"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text='@{@string/feels_like(String.valueOf(units.temperatureUnit == PreferencesKt.TEMPERATURE_C ? forecast.feelslikeC : forecast.feelslikeF) + (units.temperatureUnit == PreferencesKt.TEMPERATURE_C ? @string/temperature_c : @string/temperature_f))}'
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/current_temperature"
+                        tools:text="Feels like -14 C" />
+
+                    <TextView
+                        android:id="@+id/forecast_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@{forecast.text}"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/current_feelslike"
+                        tools:text="Moderate snow" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/forecast_text">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="24dp"
+                            app:contentPaddingBottom="6dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/hourly_forecast_title"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="6dp"
+                                    android:layout_marginBottom="6dp"
+                                    android:text="@string/hourly"
+                                    android:textSize="16sp" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/hourly_forecast_recyclerview"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:overScrollMode="never"
+                                    android:scrollbars="none" />
+
+                            </LinearLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="24dp"
+                            app:contentPaddingBottom="6dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/daily_forecast_title"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="6dp"
+                                    android:text="@string/daily"
+                                    android:textSize="16sp" />
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/daily_forecast_recyclerview"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:overScrollMode="never"
+                                    android:scrollbars="none" />
+
+                            </LinearLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="24dp"
+                            app:contentPaddingBottom="6dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/details_title"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="6sp"
+                                    android:text="@string/details"
+                                    android:textSize="16sp" />
+
+                                <GridLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:columnCount="2"
+                                    android:orientation="horizontal">
+
+                                    <include
+                                        layout="@layout/main_details_item"
+                                        app:title="@{@string/cloud}"
+                                        app:value='@{String.valueOf(forecast.cloud) + "%"}' />
+
+                                    <include
+                                        layout="@layout/main_details_item"
+                                        app:title="@{@string/precip}"
+                                        app:value='@{String.valueOf(units.precipUnit == PreferencesKt.PRECIP_MM ? forecast.precipMm : forecast.precipIn) + " " + (units.precipUnit == PreferencesKt.PRECIP_MM ? @string/precip_mm : @string/precip_in)}' />
+
+                                    <include
+                                        layout="@layout/main_details_item"
+                                        app:title="@{@string/pressure}"
+                                        app:value='@{String.valueOf(units.pressureUnit == PreferencesKt.PRESSURE_MM ? forecast.pressureMb : forecast.pressureIn) + " " + (units.pressureUnit == PreferencesKt.PRESSURE_MM ? @string/pressure_mm : @string/pressure_in)}' />
+
+                                    <include
+                                        layout="@layout/main_details_item"
+                                        app:title="@{@string/humidity}"
+                                        app:value='@{String.valueOf(forecast.humidity) + "%"}' />
+
+                                    <include
+                                        layout="@layout/main_details_item"
+                                        app:title="@{@string/wind}"
+                                        app:value='@{String.valueOf(units.windUnit == PreferencesKt.WIND_KPH ? forecast.windKph : forecast.windMph) + " " + (units.windUnit == PreferencesKt.WIND_KPH ? @string/wind_kph : @string/wind_mph)}' />
+
+                                    <include
+                                        layout="@layout/main_details_item"
+                                        app:title="@{@string/wind_direction}"
+                                        app:value="@{forecast.windDir}" />
+
+                                    <include
+                                        layout="@layout/main_details_item"
+                                        app:title="@{@string/visibility}"
+                                        app:value='@{String.valueOf(units.visibilityUnit == PreferencesKt.VISIBILITY_KM ? forecast.visKm : forecast.visMiles) + " " + (units.visibilityUnit == PreferencesKt.VISIBILITY_KM ? @string/visibility_km : @string/visibility_mi)}' />
+
+                                    <include
+                                        layout="@layout/main_details_item"
+                                        app:title="@{@string/uv}"
+                                        app:value="@{String.valueOf(forecast.uv)}" />
+
+                                </GridLayout>
+
+                            </LinearLayout>
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.core.widget.NestedScrollView>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+    </LinearLayout>
+
+</layout>
